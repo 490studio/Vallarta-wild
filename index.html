@@ -3,805 +3,965 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#021820">
-<title>Vallarta Wild · Aventuras & Exploración</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<title>Vallarta Wild · Aventuras en el Pacífico</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #021820;
-    --bg2: #042530;
-    --bg3: #063040;
-    --ocean: #0094C6;
-    --ocean-dim: rgba(0,148,198,0.15);
-    --ocean-border: rgba(0,148,198,0.3);
-    --turquoise: #00D4AA;
-    --turq-dim: rgba(0,212,170,0.12);
-    --turq-border: rgba(0,212,170,0.28);
-    --sunset: #FF6B35;
-    --sunset-dim: rgba(255,107,53,0.15);
-    --sunset-border: rgba(255,107,53,0.35);
-    --gold: #FFB800;
-    --gold-dim: rgba(255,184,0,0.12);
-    --gold-border: rgba(255,184,0,0.3);
-    --sand: #F5E6C8;
-    --t1: #F0F8FF;
-    --t2: rgba(240,248,255,0.6);
-    --t3: rgba(240,248,255,0.28);
-    --border: rgba(240,248,255,0.08);
-    --radius: 18px;
-    --radius-sm: 12px;
+    --sand: #F2EAD8;
+    --sand-dark: #E8DCC4;
+    --earth: #2C1810;
+    --earth2: #3D2418;
+    --ocean: #1B4D6E;
+    --ocean-light: #2A6B96;
+    --jungle: #2D4A2D;
+    --terracotta: #C4622D;
+    --terra-dim: rgba(196,98,45,0.12);
+    --terra-border: rgba(196,98,45,0.3);
+    --gold: #C9A84C;
+    --gold-dim: rgba(201,168,76,0.15);
+    --cream: #FAF6EE;
+    --t1: #2C1810;
+    --t2: rgba(44,24,16,0.6);
+    --t3: rgba(44,24,16,0.35);
+    --border: rgba(44,24,16,0.1);
+    --border-light: rgba(44,24,16,0.06);
+    --radius: 4px;
+    --radius-lg: 16px;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
+  html { scroll-behavior: smooth; }
+
   body {
-    font-family: 'Nunito', sans-serif;
-    background: var(--bg);
+    font-family: 'Jost', sans-serif;
+    background: var(--cream);
     color: var(--t1);
-    min-height: 100vh;
     overflow-x: hidden;
   }
 
-  body::before {
-    content: '';
-    position: fixed; inset: 0;
-    background:
-      radial-gradient(ellipse at 20% 0%, rgba(0,148,198,0.2) 0%, transparent 50%),
-      radial-gradient(ellipse at 80% 30%, rgba(0,212,170,0.08) 0%, transparent 40%),
-      radial-gradient(ellipse at 50% 100%, rgba(255,107,53,0.06) 0%, transparent 40%);
-    pointer-events: none; z-index: 0;
-  }
-
-  #app { position: relative; z-index: 1; }
-
-  /* SPLASH */
-  #splash {
-    position: fixed; inset: 0; z-index: 100;
-    background: var(--bg);
-    background-image:
-      radial-gradient(ellipse at 30% 30%, rgba(0,148,198,0.25) 0%, transparent 55%),
-      radial-gradient(ellipse at 70% 70%, rgba(255,107,53,0.1) 0%, transparent 40%);
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    padding: 48px 28px; text-align: center;
-    transition: opacity .6s ease, transform .6s ease;
-  }
-  #splash.out { opacity: 0; transform: scale(.97); pointer-events: none; }
-
-  .splash-waves {
-    font-size: 44px; margin-bottom: 16px;
-    animation: wave 2.5s ease-in-out infinite;
-  }
-  @keyframes wave {
-    0%,100% { transform: rotate(-8deg) translateY(0); }
-    50% { transform: rotate(8deg) translateY(-8px); }
-  }
-
-  .splash-name {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 72px; color: var(--t1);
-    letter-spacing: .06em; line-height: .9;
-    margin-bottom: 2px;
-  }
-  .splash-name span { color: var(--turquoise); }
-  .splash-tagline {
-    font-size: 13px; font-weight: 300;
-    letter-spacing: .15em; text-transform: uppercase;
-    color: var(--t2); margin-bottom: 6px;
-  }
-  .splash-location {
-    font-size: 12px; color: var(--turquoise);
-    font-weight: 600; letter-spacing: .08em;
-    margin-bottom: 28px;
-  }
-  .splash-activities {
-    display: flex; gap: 8px; flex-wrap: wrap;
-    justify-content: center; margin-bottom: 32px;
-  }
-  .sa {
-    font-size: 11px; font-weight: 600;
-    letter-spacing: .06em;
-    background: rgba(255,255,255,0.06);
-    border: 1px solid var(--border);
-    color: var(--t2); padding: 6px 12px; border-radius: 20px;
-  }
-  .splash-btn {
-    background: linear-gradient(135deg, var(--ocean) 0%, var(--turquoise) 100%);
-    color: var(--bg); border: none; border-radius: 50px;
-    font-family: 'Nunito', sans-serif;
-    font-size: 15px; font-weight: 800;
-    padding: 16px 40px; cursor: pointer;
-    width: 100%; max-width: 300px;
-    box-shadow: 0 8px 32px rgba(0,148,198,0.45);
-    transition: transform .15s, opacity .15s;
-    margin-bottom: 10px;
-  }
-  .splash-btn:active { transform: scale(.97); opacity: .9; }
-  .splash-note { font-size: 12px; color: var(--t3); }
-
-  /* Header */
+  /* ── HEADER ── */
   .header {
-    background: rgba(2,24,32,0.96);
-    backdrop-filter: blur(14px);
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 16px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+    transition: background .3s ease, backdrop-filter .3s;
+  }
+  .header.scrolled {
+    background: rgba(250,246,238,0.95);
+    backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--border);
-    padding: 12px 20px;
-    display: flex; align-items: center; gap: 10px;
-    position: sticky; top: 0; z-index: 10;
   }
-  .h-logo {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 24px; color: var(--t1);
-    letter-spacing: .06em; line-height: 1;
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px; font-weight: 700;
+    color: var(--cream); letter-spacing: .04em;
+    transition: color .3s;
   }
-  .h-logo span { color: var(--turquoise); }
-  .h-sub { font-size: 10px; color: var(--t3); margin-top: 1px; letter-spacing: .06em; }
-  .h-book {
-    margin-left: auto;
-    background: var(--sunset); color: var(--t1);
-    border: none; border-radius: 20px;
-    font-family: 'Nunito', sans-serif;
-    font-size: 12px; font-weight: 800;
-    padding: 8px 16px; cursor: pointer;
-    text-decoration: none; white-space: nowrap;
-    flex-shrink: 0; transition: opacity .15s;
-    box-shadow: 0 4px 14px rgba(255,107,53,0.4);
+  .header.scrolled .logo { color: var(--earth); }
+  .logo span { font-style: italic; font-weight: 400; }
+  .header-cta {
+    background: var(--terracotta); color: var(--cream);
+    border: none; border-radius: 2px;
+    font-family: 'Jost', sans-serif;
+    font-size: 11px; font-weight: 500;
+    letter-spacing: .15em; text-transform: uppercase;
+    padding: 10px 18px; cursor: pointer;
+    text-decoration: none;
+    transition: background .2s;
   }
-  .h-book:active { opacity: .85; }
+  .header-cta:active { background: #a8521f; }
 
-  /* Hero */
+  /* ── HERO ── */
   .hero {
-    padding: 32px 20px 28px;
-    border-bottom: 1px solid var(--border);
-    background-image: radial-gradient(ellipse at 50% 0%, rgba(0,148,198,0.12) 0%, transparent 55%);
+    position: relative; height: 100vh; min-height: 600px;
+    overflow: hidden; display: flex; align-items: flex-end;
   }
-  .hero-badge {
-    display: inline-flex; align-items: center; gap: 6px;
-    font-size: 11px; font-weight: 700;
-    letter-spacing: .1em; text-transform: uppercase;
-    color: var(--turquoise);
-    background: var(--turq-dim);
-    border: 1px solid var(--turq-border);
-    padding: 5px 14px; border-radius: 20px;
+  .hero-img {
+    position: absolute; inset: 0; overflow: hidden;
+  }
+  .hero-img img {
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center 40%;
+    display: block;
+    transform: scale(1.06);
+    animation: heroZoom 12s ease-out forwards;
+  }
+  @keyframes heroZoom {
+    from { transform: scale(1.06); }
+    to { transform: scale(1.0); }
+  }
+  .hero-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(44,24,16,0.15) 0%,
+      rgba(44,24,16,0.1) 30%,
+      rgba(44,24,16,0.65) 70%,
+      rgba(44,24,16,0.88) 100%
+    );
+  }
+  .hero-content {
+    position: relative; padding: 0 24px 48px;
+    width: 100%;
+  }
+  .hero-tag {
+    display: inline-block;
+    font-size: 10px; font-weight: 500;
+    letter-spacing: .25em; text-transform: uppercase;
+    color: rgba(250,246,238,0.7);
+    border: 1px solid rgba(250,246,238,0.3);
+    padding: 5px 14px; border-radius: 2px;
     margin-bottom: 14px;
   }
   .hero-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 52px; color: var(--t1);
-    line-height: .95; letter-spacing: .04em;
-    margin-bottom: 12px;
+    font-family: 'Playfair Display', serif;
+    font-size: 52px; font-weight: 900;
+    color: var(--cream); line-height: .95;
+    letter-spacing: -.01em; margin-bottom: 16px;
   }
-  .hero-title span { color: var(--turquoise); }
+  .hero-title em {
+    font-style: italic; font-weight: 400;
+    display: block; font-size: 44px;
+  }
   .hero-sub {
-    font-size: 14px; font-weight: 300;
-    color: var(--t2); line-height: 1.7;
-    margin-bottom: 22px;
+    font-size: 13px; font-weight: 300;
+    letter-spacing: .04em;
+    color: rgba(250,246,238,0.75);
+    line-height: 1.7; margin-bottom: 28px;
+    max-width: 320px;
   }
-  .hero-stats {
-    display: grid; grid-template-columns: repeat(3,1fr);
-    gap: 8px; margin-bottom: 20px;
-  }
-  .hs {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 14px 8px; text-align: center;
-  }
-  .hs-icon { font-size: 20px; margin-bottom: 6px; }
-  .hs-num {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 26px; color: var(--turquoise); line-height: 1;
-  }
-  .hs-label { font-size: 10px; color: var(--t3); margin-top: 3px; }
-  .hero-cta {
-    display: block; width: 100%;
-    background: linear-gradient(135deg, var(--ocean) 0%, var(--turquoise) 100%);
-    color: var(--bg); border: none; border-radius: 50px;
-    font-family: 'Nunito', sans-serif;
-    font-size: 15px; font-weight: 800;
-    padding: 16px; cursor: pointer;
-    text-decoration: none; text-align: center;
-    box-shadow: 0 8px 28px rgba(0,148,198,0.4);
-    transition: opacity .15s;
-  }
-  .hero-cta:active { opacity: .85; }
-
-  /* Activities filter */
-  .act-filter {
-    display: flex; gap: 8px;
-    overflow-x: auto; padding: 20px 20px 0;
-    scrollbar-width: none; -webkit-overflow-scrolling: touch;
-  }
-  .act-filter::-webkit-scrollbar { display: none; }
-  .act-chip {
-    flex-shrink: 0; font-size: 12px; font-weight: 700;
-    padding: 8px 16px; border-radius: 20px;
-    border: 1px solid var(--border);
-    background: var(--bg2); color: var(--t2);
-    cursor: pointer; transition: all .2s;
-  }
-  .act-chip.active {
-    background: var(--ocean); color: var(--t1);
-    border-color: var(--ocean);
-    box-shadow: 0 4px 14px rgba(0,148,198,0.35);
-  }
-
-  /* Activities grid */
-  .activities { padding: 16px 20px 0; }
-  .act-section { display: none; }
-  .act-section.active { display: block; }
-
-  /* Adventure card */
-  .adv-card {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    overflow: hidden; margin-bottom: 12px;
-    cursor: pointer; transition: border-color .2s;
-  }
-  .adv-card:active { border-color: rgba(255,255,255,0.15); }
-  .adv-card.featured { border-color: var(--turq-border); }
-
-  .adv-banner {
-    height: 100px; position: relative;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 48px;
-    overflow: hidden;
-  }
-  .adv-duration {
-    position: absolute; top: 10px; right: 12px;
-    font-size: 10px; font-weight: 700;
-    letter-spacing: .08em; text-transform: uppercase;
-    background: rgba(2,24,32,0.85);
-    border: 1px solid var(--border);
-    color: var(--t2); padding: 4px 10px; border-radius: 10px;
-  }
-  .adv-tag {
-    position: absolute; top: 10px; left: 12px;
-    font-size: 10px; font-weight: 700;
-    letter-spacing: .06em; text-transform: uppercase;
-    padding: 4px 10px; border-radius: 10px;
-  }
-  .tag-hot { background: var(--sunset-dim); color: var(--sunset); border: 1px solid var(--sunset-border); }
-  .tag-new { background: var(--turq-dim); color: var(--turquoise); border: 1px solid var(--turq-border); }
-  .tag-group { background: var(--gold-dim); color: var(--gold); border: 1px solid var(--gold-border); }
-
-  .adv-info {
-    padding: 14px 16px;
-    display: flex; align-items: flex-start;
-    justify-content: space-between; gap: 10px;
-  }
-  .adv-name {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 22px; color: var(--t1);
-    letter-spacing: .04em; margin-bottom: 4px; line-height: 1;
-  }
-  .adv-meta { font-size: 12px; color: var(--t2); line-height: 1.5; }
-  .adv-price-block { text-align: right; flex-shrink: 0; }
-  .adv-price {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 24px; color: var(--gold); line-height: 1;
-  }
-  .adv-per { font-size: 10px; color: var(--t3); margin-top: 2px; }
-
-  .adv-detail {
-    max-height: 0; overflow: hidden;
-    transition: max-height .4s ease, opacity .3s ease; opacity: 0;
-  }
-  .adv-detail.open { max-height: 500px; opacity: 1; }
-  .adv-detail-inner {
-    border-top: 1px solid var(--border);
-    padding: 14px 16px 16px;
-  }
-  .adv-desc { font-size: 13px; font-weight: 300; color: var(--t2); line-height: 1.7; margin-bottom: 12px; }
-  .adv-includes {
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 6px; margin-bottom: 14px;
-  }
-  .ai {
-    display: flex; align-items: center; gap: 6px;
-    font-size: 12px; color: var(--t2);
-  }
-  .ai::before { content: '✓'; color: var(--turquoise); font-size: 11px; flex-shrink: 0; font-weight: 700; }
-  .adv-cta {
-    display: block; width: 100%;
-    background: linear-gradient(135deg, var(--ocean) 0%, var(--turquoise) 100%);
-    color: var(--bg); border: none; border-radius: 10px;
-    font-family: 'Nunito', sans-serif;
-    font-size: 13px; font-weight: 800;
-    padding: 13px; cursor: pointer;
-    text-decoration: none; text-align: center;
-    box-shadow: 0 4px 14px rgba(0,148,198,0.3);
-    transition: opacity .15s;
-  }
-  .adv-cta:active { opacity: .85; }
-
-  /* Info section */
-  .info-section { padding: 28px 20px 0; }
-  .sec-eyebrow {
-    font-size: 11px; font-weight: 700;
+  .hero-actions { display: flex; gap: 12px; align-items: center; }
+  .btn-primary {
+    background: var(--terracotta); color: var(--cream);
+    border: none; border-radius: 2px;
+    font-family: 'Jost', sans-serif;
+    font-size: 12px; font-weight: 500;
     letter-spacing: .15em; text-transform: uppercase;
-    color: var(--turquoise); margin-bottom: 6px;
+    padding: 14px 28px; cursor: pointer;
+    text-decoration: none; flex-shrink: 0;
+    transition: background .2s;
   }
-  .sec-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 34px; color: var(--t1);
-    letter-spacing: .04em; margin-bottom: 8px; line-height: 1;
+  .btn-primary:active { background: #a8521f; }
+  .btn-ghost {
+    font-size: 12px; font-weight: 400;
+    letter-spacing: .1em; text-transform: uppercase;
+    color: rgba(250,246,238,0.65);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(250,246,238,0.3);
+    padding-bottom: 2px;
   }
-  .sec-sub { font-size: 13px; font-weight: 300; color: var(--t2); line-height: 1.6; margin-bottom: 18px; }
 
-  /* Info cards */
-  .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
-  .ic {
-    background: var(--bg2); border: 1px solid var(--border);
-    border-radius: var(--radius-sm); padding: 16px 12px; text-align: center;
+  /* ── STRIP ── */
+  .strip {
+    background: var(--earth);
+    padding: 18px 24px;
+    display: flex; gap: 0; overflow-x: auto; scrollbar-width: none;
   }
-  .ic-icon { font-size: 22px; margin-bottom: 6px; }
-  .ic-label { font-size: 10px; color: var(--t3); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 4px; }
-  .ic-value { font-size: 13px; font-weight: 700; color: var(--t1); line-height: 1.4; }
+  .strip::-webkit-scrollbar { display: none; }
+  .strip-item {
+    flex-shrink: 0;
+    padding: 0 24px; text-align: center;
+    border-right: 1px solid rgba(250,246,238,0.1);
+  }
+  .strip-item:first-child { padding-left: 0; }
+  .strip-item:last-child { border-right: none; }
+  .si-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; color: var(--gold); line-height: 1;
+  }
+  .si-label {
+    font-size: 10px; font-weight: 300;
+    letter-spacing: .1em; text-transform: uppercase;
+    color: rgba(250,246,238,0.45); margin-top: 3px;
+  }
 
-  /* FAQ */
-  .faq-card {
-    background: var(--bg2); border: 1px solid var(--border);
-    border-radius: var(--radius); padding: 4px 20px; margin-bottom: 10px;
+  /* ── INTRO SECTION ── */
+  .intro {
+    padding: 60px 24px 48px;
+    border-bottom: 1px solid var(--border-light);
   }
-  .faq-item { border-bottom: 1px solid var(--border); cursor: pointer; }
-  .faq-item:last-child { border-bottom: none; }
+  .eyebrow {
+    font-size: 10px; font-weight: 500;
+    letter-spacing: .25em; text-transform: uppercase;
+    color: var(--terracotta); margin-bottom: 16px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .eyebrow::after {
+    content: ''; flex: 1; height: 1px;
+    background: var(--terra-border);
+    max-width: 40px;
+  }
+  .intro-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 34px; font-weight: 400;
+    line-height: 1.2; color: var(--earth);
+    margin-bottom: 16px; letter-spacing: -.01em;
+  }
+  .intro-title em { font-style: italic; color: var(--ocean); }
+  .intro-text {
+    font-size: 14px; font-weight: 300;
+    color: var(--t2); line-height: 1.8; margin-bottom: 0;
+  }
+
+  /* ── TOURS SECTION ── */
+  .tours-section { padding: 0 0 60px; }
+  .tours-header {
+    padding: 48px 24px 28px;
+    display: flex; align-items: flex-end; justify-content: space-between; gap: 16px;
+  }
+  .tours-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px; font-weight: 400;
+    color: var(--earth); line-height: 1.1;
+  }
+  .tours-count {
+    font-size: 11px; font-weight: 300;
+    letter-spacing: .1em; color: var(--t3);
+    flex-shrink: 0;
+  }
+
+  /* ── TOUR CARD ── */
+  .tour-card {
+    margin: 0 24px 20px;
+    background: var(--sand);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: transform .2s ease, box-shadow .2s ease;
+  }
+  .tour-card:active { transform: scale(.99); }
+
+  .tc-img-wrap {
+    position: relative; height: 240px; overflow: hidden;
+  }
+  .tc-img-wrap img {
+    width: 100%; height: 100%;
+    object-fit: cover; display: block;
+    transition: transform .5s ease;
+  }
+  .tour-card:active .tc-img-wrap img { transform: scale(1.03); }
+
+  .tc-badge {
+    position: absolute; top: 14px; left: 14px;
+    font-size: 10px; font-weight: 500;
+    letter-spacing: .12em; text-transform: uppercase;
+    padding: 5px 12px; border-radius: 2px;
+  }
+  .badge-popular { background: var(--terracotta); color: var(--cream); }
+  .badge-exclusive { background: var(--ocean); color: var(--cream); }
+  .badge-eco { background: var(--jungle); color: var(--cream); }
+  .badge-adrenaline { background: var(--earth); color: var(--gold); }
+
+  .tc-duration {
+    position: absolute; bottom: 14px; right: 14px;
+    background: rgba(250,246,238,0.92);
+    color: var(--earth);
+    font-size: 11px; font-weight: 500;
+    letter-spacing: .08em;
+    padding: 4px 12px; border-radius: 2px;
+    backdrop-filter: blur(8px);
+  }
+
+  .tc-body { padding: 20px; }
+  .tc-category {
+    font-size: 10px; font-weight: 500;
+    letter-spacing: .2em; text-transform: uppercase;
+    color: var(--terracotta); margin-bottom: 6px;
+  }
+  .tc-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px; font-weight: 700;
+    color: var(--earth); margin-bottom: 6px; line-height: 1.1;
+  }
+  .tc-meta {
+    font-size: 12px; font-weight: 300;
+    color: var(--t2); margin-bottom: 14px; line-height: 1.5;
+  }
+  .tc-footer {
+    display: flex; align-items: center;
+    justify-content: space-between; gap: 12px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border-light);
+  }
+  .tc-price-label { font-size: 10px; font-weight: 300; letter-spacing: .08em; color: var(--t3); text-transform: uppercase; margin-bottom: 2px; }
+  .tc-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px; font-weight: 700; color: var(--earth); line-height: 1;
+  }
+  .tc-price span { font-size: 13px; font-weight: 300; color: var(--t2); }
+  .tc-book {
+    background: var(--earth); color: var(--cream);
+    border: none; border-radius: 2px;
+    font-family: 'Jost', sans-serif;
+    font-size: 11px; font-weight: 500;
+    letter-spacing: .12em; text-transform: uppercase;
+    padding: 11px 18px; cursor: pointer;
+    text-decoration: none; white-space: nowrap;
+    transition: background .2s;
+    flex-shrink: 0;
+  }
+  .tc-book:active { background: var(--earth2); }
+
+  /* Detail expandible */
+  .tc-detail {
+    max-height: 0; overflow: hidden;
+    transition: max-height .4s ease, opacity .3s ease;
+    opacity: 0;
+  }
+  .tc-detail.open { max-height: 400px; opacity: 1; }
+  .tc-detail-inner {
+    padding: 0 20px 20px;
+    border-top: 1px solid var(--border-light);
+    margin-top: 0;
+  }
+  .tc-desc {
+    font-size: 13px; font-weight: 300;
+    color: var(--t2); line-height: 1.8;
+    padding-top: 16px; margin-bottom: 14px;
+  }
+  .tc-includes {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 6px; margin-bottom: 16px;
+  }
+  .ti {
+    font-size: 12px; font-weight: 300; color: var(--t2);
+    display: flex; align-items: center; gap: 6px;
+  }
+  .ti::before {
+    content: '–'; color: var(--terracotta);
+    font-weight: 500; flex-shrink: 0;
+  }
+  .tc-book-full {
+    display: block; width: 100%;
+    background: var(--terracotta); color: var(--cream);
+    border: none; border-radius: 2px;
+    font-family: 'Jost', sans-serif;
+    font-size: 12px; font-weight: 500;
+    letter-spacing: .15em; text-transform: uppercase;
+    padding: 14px; cursor: pointer;
+    text-decoration: none; text-align: center;
+    transition: background .2s;
+  }
+  .tc-book-full:active { background: #a8521f; }
+
+  /* ── FEATURED WIDE CARD ── */
+  .tour-card.wide .tc-img-wrap { height: 280px; }
+  .tour-card.wide .tc-name { font-size: 28px; }
+
+  /* ── WHY US ── */
+  .why-section {
+    background: var(--earth);
+    padding: 56px 24px;
+  }
+  .why-eyebrow {
+    font-size: 10px; font-weight: 500;
+    letter-spacing: .25em; text-transform: uppercase;
+    color: rgba(201,168,76,0.7); margin-bottom: 14px;
+  }
+  .why-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px; font-weight: 400; font-style: italic;
+    color: var(--cream); margin-bottom: 36px; line-height: 1.2;
+  }
+  .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .why-item { }
+  .wi-icon {
+    font-size: 24px; margin-bottom: 10px;
+    display: block;
+  }
+  .wi-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px; font-weight: 700;
+    color: var(--cream); margin-bottom: 5px; line-height: 1.2;
+  }
+  .wi-desc {
+    font-size: 12px; font-weight: 300;
+    color: rgba(250,246,238,0.5); line-height: 1.6;
+  }
+
+  /* ── INFO PRÁCTICA ── */
+  .info-section { padding: 56px 24px; border-bottom: 1px solid var(--border-light); }
+  .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+  .info-item {
+    padding: 16px;
+    background: var(--sand);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+  }
+  .ii-icon { font-size: 18px; margin-bottom: 6px; }
+  .ii-label {
+    font-size: 10px; font-weight: 500;
+    letter-spacing: .12em; text-transform: uppercase;
+    color: var(--t3); margin-bottom: 4px;
+  }
+  .ii-value { font-size: 13px; font-weight: 500; color: var(--earth); line-height: 1.4; }
+
+  /* ── FAQ ── */
+  .faq-section { padding: 0 24px 56px; }
+  .faq-item {
+    border-bottom: 1px solid var(--border-light);
+    cursor: pointer;
+  }
   .faq-q {
-    padding: 15px 0;
+    padding: 18px 0;
     display: flex; align-items: center; justify-content: space-between; gap: 12px;
   }
-  .faq-q-text { font-size: 14px; font-weight: 700; color: var(--t1); line-height: 1.3; }
-  .faq-arrow { color: var(--turquoise); font-size: 14px; transition: transform .25s; flex-shrink: 0; }
-  .faq-item.open .faq-arrow { transform: rotate(180deg); }
-  .faq-a { max-height: 0; overflow: hidden; transition: max-height .3s ease, opacity .25s ease; opacity: 0; }
+  .faq-q-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px; font-weight: 400;
+    color: var(--earth); line-height: 1.3;
+  }
+  .faq-icon {
+    width: 24px; height: 24px; border-radius: 50%;
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; color: var(--terracotta);
+    flex-shrink: 0; transition: transform .25s;
+  }
+  .faq-item.open .faq-icon { transform: rotate(45deg); }
+  .faq-a { max-height: 0; overflow: hidden; transition: max-height .3s ease, opacity .25s; opacity: 0; }
   .faq-a.open { max-height: 200px; opacity: 1; }
-  .faq-a-inner { padding-bottom: 14px; font-size: 13px; font-weight: 300; color: var(--t2); line-height: 1.7; }
+  .faq-a-inner {
+    padding-bottom: 16px;
+    font-size: 13px; font-weight: 300;
+    color: var(--t2); line-height: 1.8;
+  }
 
-  /* CTA block */
-  .cta-block {
-    margin: 28px 20px 40px;
-    border-radius: var(--radius); overflow: hidden;
-    position: relative;
+  /* ── CTA FINAL ── */
+  .cta-final {
+    position: relative; overflow: hidden;
+    min-height: 400px; display: flex; align-items: center;
   }
-  .cta-ocean {
-    background: linear-gradient(135deg, var(--bg2) 0%, var(--bg3) 100%);
-    border: 1px solid var(--ocean-border);
-    padding: 32px 24px; text-align: center;
-    background-image: radial-gradient(ellipse at 50% 0%, rgba(0,148,198,0.15) 0%, transparent 55%);
+  .cta-img {
+    position: absolute; inset: 0; overflow: hidden;
   }
-  .cb-emoji { font-size: 36px; margin-bottom: 12px; }
-  .cb-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 38px; color: var(--t1);
-    letter-spacing: .04em; line-height: 1; margin-bottom: 8px;
+  .cta-img img {
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center;
+    display: block;
   }
-  .cb-title span { color: var(--turquoise); }
-  .cb-sub { font-size: 13px; font-weight: 300; color: var(--t2); margin-bottom: 22px; line-height: 1.6; }
-  .cb-btn {
+  .cta-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(44,24,16,0.88) 0%, rgba(27,77,110,0.75) 100%);
+  }
+  .cta-content {
+    position: relative; padding: 60px 24px;
+    width: 100%;
+  }
+  .cta-eyebrow {
+    font-size: 10px; font-weight: 500;
+    letter-spacing: .25em; text-transform: uppercase;
+    color: rgba(250,246,238,0.55); margin-bottom: 12px;
+  }
+  .cta-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 38px; font-weight: 900;
+    color: var(--cream); line-height: 1.05;
+    margin-bottom: 12px; letter-spacing: -.01em;
+  }
+  .cta-title em { font-style: italic; font-weight: 400; color: var(--gold); }
+  .cta-sub {
+    font-size: 14px; font-weight: 300;
+    color: rgba(250,246,238,0.65);
+    line-height: 1.7; margin-bottom: 28px;
+  }
+  .cta-btns { display: flex; flex-direction: column; gap: 10px; }
+  .cta-btn {
     display: block; width: 100%;
-    background: linear-gradient(135deg, var(--ocean) 0%, var(--turquoise) 100%);
-    color: var(--bg); border: none; border-radius: 50px;
-    font-family: 'Nunito', sans-serif;
-    font-size: 15px; font-weight: 800;
+    background: var(--terracotta); color: var(--cream);
+    border: none; border-radius: 2px;
+    font-family: 'Jost', sans-serif;
+    font-size: 12px; font-weight: 500;
+    letter-spacing: .18em; text-transform: uppercase;
     padding: 16px; cursor: pointer;
-    text-decoration: none; margin-bottom: 10px;
-    box-shadow: 0 8px 28px rgba(0,148,198,0.4);
-    transition: opacity .15s;
+    text-decoration: none; text-align: center;
+    transition: background .2s;
   }
-  .cb-btn:active { opacity: .85; }
-  .cb-btn.sunset {
-    background: var(--sunset); color: var(--t1);
-    box-shadow: 0 8px 28px rgba(255,107,53,0.35);
-  }
-  .cb-btn.outline {
+  .cta-btn:active { background: #a8521f; }
+  .cta-btn.outline {
     background: transparent;
-    border: 1px solid var(--border); color: var(--t2);
-    box-shadow: none;
+    border: 1px solid rgba(250,246,238,0.3);
+    color: rgba(250,246,238,0.7);
   }
-  .cb-note { font-size: 11px; color: var(--t3); margin-top: 10px; line-height: 1.5; }
+  .cta-note {
+    font-size: 11px; font-weight: 300;
+    color: rgba(250,246,238,0.35);
+    margin-top: 16px; text-align: center; line-height: 1.6;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    background: var(--earth2);
+    padding: 32px 24px;
+    text-align: center;
+  }
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; font-weight: 700;
+    color: var(--cream); margin-bottom: 4px;
+  }
+  .footer-logo span { font-style: italic; font-weight: 400; }
+  .footer-sub {
+    font-size: 11px; font-weight: 300;
+    letter-spacing: .1em; color: rgba(250,246,238,0.35);
+  }
 
   @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(12px); }
+    from { opacity: 0; transform: translateY(16px); }
     to { opacity: 1; transform: translateY(0); }
   }
-  .fade-in { animation: fadeUp .4s ease forwards; }
+  .fade-in { animation: fadeUp .6s ease forwards; }
 </style>
 </head>
 <body>
 
-<!-- SPLASH -->
-<div id="splash">
-  <div class="splash-waves">🌊</div>
-  <div class="splash-name">Vallarta <span>Wild</span></div>
-  <div class="splash-tagline">Adventures & Exploration</div>
-  <div class="splash-location">📍 Puerto Vallarta · Bahía de Banderas</div>
-  <div class="splash-activities">
-    <span class="sa">⛵ Yate & Velero</span>
-    <span class="sa">🏍️ Cuatrimotos</span>
-    <span class="sa">🚤 Jet Ski</span>
-    <span class="sa">🥾 Hiking</span>
-  </div>
-  <button class="splash-btn" onclick="startApp()">Explorar aventuras 🌊</button>
-  <div class="splash-note">Tours diarios · Grupos privados · Todo incluido</div>
+<!-- HEADER -->
+<div class="header" id="header">
+  <div class="logo">Vallarta <span>Wild</span></div>
+  <a href="https://wa.me/523312345678?text=Hola%2C%20quiero%20reservar%20una%20aventura%20con%20Vallarta%20Wild" target="_blank" class="header-cta">Reservar</a>
 </div>
 
-<!-- APP -->
-<div id="app">
-
-  <div class="header">
-    <div>
-      <div class="h-logo">Vallarta <span>Wild</span></div>
-      <div class="h-sub">Puerto Vallarta · Adventures</div>
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-img">
+    <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1400&q=85" alt="Puerto Vallarta aventuras">
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content fade-in">
+    <div class="hero-tag">Puerto Vallarta · Bahía de Banderas · México</div>
+    <div class="hero-title">
+      La aventura<br>
+      <em>está aquí afuera</em>
     </div>
-    <a href="https://wa.me/523312345678?text=Hola%2C%20quiero%20reservar%20una%20aventura%20con%20Vallarta%20Wild" target="_blank" class="h-book">Reservar 🌊</a>
+    <div class="hero-sub">Mar, jungla y adrenalina en el Pacífico mexicano. Tours privados y grupales con guías certificados.</div>
+    <div class="hero-actions">
+      <a href="#tours" class="btn-primary">Ver aventuras</a>
+      <a href="https://wa.me/523312345678" target="_blank" class="btn-ghost">Hablar con nosotros</a>
+    </div>
+  </div>
+</div>
+
+<!-- STRIP -->
+<div class="strip">
+  <div class="strip-item">
+    <div class="si-num">500+</div>
+    <div class="si-label">aventureros</div>
+  </div>
+  <div class="strip-item">
+    <div class="si-num">7</div>
+    <div class="si-label">experiencias</div>
+  </div>
+  <div class="strip-item">
+    <div class="si-num">365</div>
+    <div class="si-label">días al año</div>
+  </div>
+  <div class="strip-item">
+    <div class="si-num">4.9</div>
+    <div class="si-label">calificación</div>
+  </div>
+</div>
+
+<!-- INTRO -->
+<div class="intro">
+  <div class="eyebrow">Nuestra filosofía</div>
+  <div class="intro-title">No solo tours —<br><em>memorias que duran</em></div>
+  <div class="intro-text">En Vallarta Wild creemos que la mejor manera de conocer Puerto Vallarta no es desde una terraza, sino desde el mar, la jungla y los caminos de tierra que pocos conocen. Cada experiencia es guiada por locales que aman profundamente este rincón del Pacífico.</div>
+</div>
+
+<!-- TOURS -->
+<div class="tours-section" id="tours">
+  <div class="tours-header">
+    <div class="tours-title">Nuestras<br>experiencias</div>
+    <div class="tours-count">7 aventuras</div>
   </div>
 
-  <!-- Hero -->
-  <div class="hero fade-in">
-    <div class="hero-badge">🌊 Puerto Vallarta · Todo el año</div>
-    <div class="hero-title">La aventura<br>te está <span>esperando</span></div>
-    <div class="hero-sub">Tours privados y grupales en el Pacífico mexicano. Mar, selva y adrenalina — todo en un mismo destino.</div>
-    <div class="hero-stats">
-      <div class="hs">
-        <div class="hs-icon">⭐</div>
-        <div class="hs-num">500+</div>
-        <div class="hs-label">aventureros al año</div>
-      </div>
-      <div class="hs">
-        <div class="hs-icon">🗓️</div>
-        <div class="hs-num">365</div>
-        <div class="hs-label">días disponibles</div>
-      </div>
-      <div class="hs">
-        <div class="hs-icon">🏆</div>
-        <div class="hs-num">4.9</div>
-        <div class="hs-label">calificación</div>
+  <!-- Sunset Yacht -->
+  <div class="tour-card wide" onclick="toggleTour('t1', this)">
+    <div class="tc-img-wrap">
+      <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800&q=80" alt="Sunset Yacht" loading="lazy">
+      <div class="tc-badge badge-popular">Más popular</div>
+      <div class="tc-duration">4 horas</div>
+    </div>
+    <div class="tc-body">
+      <div class="tc-category">Mar · Atardecer</div>
+      <div class="tc-name">Sunset Yacht Tour</div>
+      <div class="tc-meta">Bahía de Banderas · Open bar · Máx. 12 personas</div>
+      <div class="tc-footer">
+        <div>
+          <div class="tc-price-label">Desde</div>
+          <div class="tc-price">$1,800 <span>/ persona</span></div>
+        </div>
+        <a href="https://wa.me/523312345678?text=Hola%2C%20quiero%20reservar%20el%20Sunset%20Yacht%20Tour" target="_blank" class="tc-book" onclick="event.stopPropagation()">Reservar</a>
       </div>
     </div>
-    <a href="https://wa.me/523312345678?text=Hola%2C%20quiero%20informes%20sobre%20los%20tours%20de%20Vallarta%20Wild" target="_blank" class="hero-cta">Ver disponibilidad hoy →</a>
-  </div>
-
-  <!-- Filter -->
-  <div class="act-filter">
-    <button class="act-chip active" onclick="showAct('todas', this)">Todas</button>
-    <button class="act-chip" onclick="showAct('mar', this)">⛵ Mar</button>
-    <button class="act-chip" onclick="showAct('tierra', this)">🏍️ Tierra</button>
-    <button class="act-chip" onclick="showAct('naturaleza', this)">🥾 Naturaleza</button>
-    <button class="act-chip" onclick="showAct('privado', this)">✦ Privado</button>
-  </div>
-
-  <div class="activities">
-
-    <!-- TODAS -->
-    <div class="act-section active" id="act-todas">
-
-      <!-- Yate Sunset -->
-      <div class="adv-card featured" onclick="toggleAdv('a1')">
-        <div class="adv-banner" style="background:linear-gradient(135deg,#021820,#0a3a4a);">
-          <span>⛵</span>
-          <div class="adv-tag tag-hot">🔥 Más popular</div>
-          <div class="adv-duration">4 horas</div>
+    <div class="tc-detail" id="t1">
+      <div class="tc-detail-inner">
+        <div class="tc-desc">Navega al atardecer por la Bahía de Banderas a bordo de nuestro yate de lujo. Open bar, música y snorkel en Los Arcos mientras el sol se hunde en el Pacífico.</div>
+        <div class="tc-includes">
+          <div class="ti">Open bar premium</div>
+          <div class="ti">Snacks gourmet</div>
+          <div class="ti">Snorkel en Los Arcos</div>
+          <div class="ti">Música / DJ</div>
+          <div class="ti">Chaleco salvavidas</div>
+          <div class="ti">Capitán certificado</div>
         </div>
-        <div class="adv-info">
-          <div>
-            <div class="adv-name">Sunset Yacht Tour</div>
-            <div class="adv-meta">Bahía de Banderas · Atardecer<br>Máx. 12 personas · Open bar incluido</div>
-          </div>
-          <div class="adv-price-block">
-            <div class="adv-price">$1,800</div>
-            <div class="adv-per">por persona</div>
-          </div>
-        </div>
-        <div class="adv-detail" id="a1">
-          <div class="adv-detail-inner">
-            <div class="adv-desc">Navega al atardecer por la Bahía de Banderas a bordo de nuestro yate de lujo. Observa la costa dorada de Puerto Vallarta mientras el sol se hunde en el Pacífico — con música, open bar y snacks gourmet.</div>
-            <div class="adv-includes">
-              <div class="ai">Open bar premium</div>
-              <div class="ai">Snacks y botanas</div>
-              <div class="ai">Música en vivo / DJ</div>
-              <div class="ai">Snorkel en Los Arcos</div>
-              <div class="ai">Chaleco salvavidas</div>
-              <div class="ai">Capitán certificado</div>
-            </div>
-            <a href="https://wa.me/523312345678?text=Hola%2C%20quiero%20reservar%20el%20Sunset%20Yacht%20Tour%20de%20Vallarta%20Wild" target="_blank" class="adv-cta">Reservar Sunset Yacht →</a>
-          </div>
-        </div>
+        <a href="https://wa.me/523312345678?text=Hola%2C%20quiero%20reservar%20el%20Sunset%20Yacht%20Tour" target="_blank" class="tc-book-full">Reservar ahora</a>
       </div>
-
-      <!-- Velero -->
-      <div class="adv-card" onclick="toggleAdv('a2')">
-        <div class="adv-banner" style="background:linear-gradient(135deg,#021820,#051f30);">
-          <span>🌊</span>
-          <div class="adv-tag tag-new">✦ Exclusivo</div>
-          <div class="adv-duration">6 horas</div>
-        </div>
-        <div class="adv-info">
-          <div>
-            <div class="adv-name">Velero Privado</div>
-            <div class="adv-meta">Tour privado · Islas Marietas<br>Hasta 8 personas · Snorkel y playa</div>
-          </div>
-          <div class="adv-price-block">
-            <div class="adv-price">$8,500</div>
-            <div class="adv-per">por grupo</div>
-          </div>
-        </div>
-        <div class="adv-detail" id="a2">
-          <div class="adv-detail-inner">
-            <div class="adv-desc">Un día completo en velero rumbo a las Islas Marietas — reserva natural protegida, hogar de la famosa Playa del Amor. Snorkel entre vida marina, delfines y la icónica cueva escondida.</div>
-            <div class="adv-includes">
-              <div class="ai">Tour 100% privado</div>
-              <div class="ai">Desayuno a bordo</div>
-              <div class="ai">Comida incluida</div>
-              <div class="ai">Equipo de snorkel</div>
-              <div class="ai">Guía certificado</div>
-              <div class="ai">Fotos del tour</div>
-            </div>
-            <a href="https://wa.me/523312345678?text=Hola%2C%20quiero%20informes%20del%20Velero%20Privado%20a%20Islas%20Marietas" target="_blank" class="adv-cta">Reservar Velero Privado →</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Jet Ski -->
-      <div class="adv-card" onclick="toggleAdv('a3')">
-        <div class="adv-banner" style="background:linear-gradient(135deg,#1a0820,#2a1030);">
-          <span>🚤</span>
-          <div class="adv-tag tag-hot">⚡ Adrenalina</div>
-          <div class="adv-duration">1 hora</div>
-        </div>
-        <div class="adv-info">
-          <div>
-            <div class="adv-name">Jet Ski Vallarta</div>
-            <div class="adv-meta">Playa Los Muertos · Zona Romántica<br>Individual o doble · Instructor opcional</div>
-          </div>
-          <div class="adv-price-block">
-            <div class="adv-price">$950</div>
-            <div class="adv-per">por moto</div>
-          </div>
-        </div>
-        <div class="adv-detail" id="a3">
-          <div class="adv-detail-inner">
-            <div class="adv-desc">Acelera en las aguas del Pacífico con nuestras motos acuáticas de última generación. Sin experiencia previa necesaria — instructor disponible. El tour recorre la bahía hasta Los Arcos del Pacífico.</div>
-            <div class="adv-includes">
-              <div class="ai">Moto acuática nueva</div>
-              <div class="ai">Chaleco salvavidas</div>
-              <div class="ai">Instrucción básica</div>
-              <div class="ai">Ruta guiada</div>
-              <div class="ai">Seguro incluido</div>
-              <div class="ai">Foto de recuerdo</div>
-            </div>
-            <a href="https://wa.me/523312345678?text=Hola%2C%20quiero%20reservar%20Jet%20Ski%20con%20Vallarta%20Wild" target="_blank" class="adv-cta">Reservar Jet Ski →</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Cuatrimotos -->
-      <div class="adv-card" onclick="toggleAdv('a4')">
-        <div class="adv-banner" style="background:linear-gradient(135deg,#1a0a00,#2a1500);">
-          <span>🏍️</span>
-          <div class="adv-tag tag-group">👥 Grupos</div>
-          <div class="adv-duration">3 horas</div>
-        </div>
-        <div class="adv-info">
-          <div>
-            <div class="adv-name">Cuatrimotos Sierra</div>
-            <div class="adv-meta">Sierra Madre Occidental · Canopy<br>Grupos de 2 a 20 · Cascadas y selva</div>
-          </div>
-          <div class="adv-price-block">
-            <div class="adv-price">$1,200</div>
-            <div class="adv-per">por persona</div>
-          </div>
-        </div>
-        <div class="adv-detail" id="a4">
-          <div class="adv-detail-inner">
-            <div class="adv-desc">Recorre los caminos de terracería de la Sierra Madre en cuatrimoto. El tour atraviesa jungla tropical, cruza ríos y llega a cascadas escondidas en el corazón de la montaña — con vistas al Pacífico.</div>
-            <div class="adv-includes">
-              <div class="ai">Cuatrimoto semi-automática</div>
-              <div class="ai">Casco y equipo</div>
-              <div class="ai">Guía bilingual</div>
-              <div class="ai">Parada en cascada</div>
-              <div class="ai">Transporte de ida/vuelta</div>
-              <div class="ai">Agua y snack</div>
-            </div>
-            <a href="https://wa.me/523312345678?text=Hola%2C%20quiero%20reservar%20Cuatrimotos%20Sierra%20con%20Vallarta%20Wild" target="_blank" class="adv-cta">Reservar Cuatrimotos →</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Hiking -->
-      <div class="adv-card" onclick="toggleAdv('a5')">
-        <div class="adv-banner" style="background:linear-gradient(135deg,#051a08,#0a2d0e);">
-          <span>🥾</span>
-          <div class="adv-tag tag-new">🌿 Eco-tour</div>
-          <div class="adv-duration">5 horas</div>
-        </div>
-        <div class="adv-info">
-          <div>
-            <div class="adv-name">Jungle Hiking</div>
-            <div class="adv-meta">Parque Nacional · El Edén<br>Grupos máx. 8 · Nivel intermedio</div>
-          </div>
-          <div class="adv-price-block">
-            <div class="adv-price">$850</div>
-            <div class="adv-per">por persona</div>
-          </div>
-        </div>
-        <div class="adv-detail" id="a5">
-          <div class="adv-detail-inner">
-            <div class="adv-desc">Adéntrate en la jungla tropical de Puerto Vallarta hasta llegar al mítico El Edén, locación de escenas de la película Predator. Cruza el Río Cuale, observa aves exóticas y descansa en cascadas naturales.</div>
-            <div class="adv-includes">
-              <div class="ai">Guía naturalista</div>
-              <div class="ai">Bastones de trekking</div>
-              <div class="ai">Desayuno en el río</div>
-              <div class="ai">Identificación de flora</div>
-              <div class="ai">Transporte incluido</div>
-              <div class="ai">Seguro de actividad</div>
-            </div>
-            <a href="https://wa.me/523312345678?text=Hola%2C%20quiero%20reservar%20el%20Jungle%20Hiking%20con%20Vallarta%20Wild" target="_blank" class="adv-cta">Reservar Hiking →</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Combo -->
-      <div class="adv-card featured" onclick="toggleAdv('a6')">
-        <div class="adv-banner" style="background:linear-gradient(135deg,#0a1820,#152535);">
-          <span>🌊🏍️🥾</span>
-          <div class="adv-tag" style="background:var(--gold-dim);color:var(--gold);border:1px solid var(--gold-border);">⭐ Combo</div>
-          <div class="adv-duration">2 días</div>
-        </div>
-        <div class="adv-info">
-          <div>
-            <div class="adv-name">Wild Vallarta Pack</div>
-            <div class="adv-meta">Mar + Sierra + Jungla<br>Todo incluido · 2 días / 3 aventuras</div>
-          </div>
-          <div class="adv-price-block">
-            <div class="adv-price">$3,200</div>
-            <div class="adv-per">por persona</div>
-          </div>
-        </div>
-        <div class="adv-detail" id="a6">
-          <div class="adv-detail-inner">
-            <div class="adv-desc">El paquete definitivo de Vallarta Wild. Día 1: Sunset Yacht + Jet Ski en la bahía. Día 2: Cuatrimotos en la sierra + Jungle Hiking. Dos días de adrenalina pura en tierra y mar. Incluye transporte, comidas y guías.</div>
-            <div class="adv-includes">
-              <div class="ai">3 aventuras completas</div>
-              <div class="ai">Todas las comidas</div>
-              <div class="ai">Transporte todo el viaje</div>
-              <div class="ai">Guías bilingüe</div>
-              <div class="ai">Fotos profesionales</div>
-              <div class="ai">Ahorra $800 vs individual</div>
-            </div>
-            <a href="https://wa.me/523312345678?text=Hola%2C%20me%20interesa%20el%20Wild%20Vallarta%20Pack%20de%202%20d%C3%ADas" target="_blank" class="adv-cta">Reservar Wild Pack →</a>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- MAR -->
-    <div class="act-section" id="act-mar">
-      <div style="font-size:13px;color:var(--t2);text-align:center;padding:20px 0;font-weight:300;">Mostrando aventuras en el mar · Ver "Todas" para el catálogo completo</div>
-    </div>
-
-    <!-- TIERRA -->
-    <div class="act-section" id="act-tierra">
-      <div style="font-size:13px;color:var(--t2);text-align:center;padding:20px 0;font-weight:300;">Mostrando aventuras en tierra · Ver "Todas" para el catálogo completo</div>
-    </div>
-
-    <!-- NATURALEZA -->
-    <div class="act-section" id="act-naturaleza">
-      <div style="font-size:13px;color:var(--t2);text-align:center;padding:20px 0;font-weight:300;">Mostrando tours de naturaleza · Ver "Todas" para el catálogo completo</div>
-    </div>
-
-    <!-- PRIVADO -->
-    <div class="act-section" id="act-privado">
-      <div style="font-size:13px;color:var(--t2);text-align:center;padding:20px 0;font-weight:300;">Para cotizar tours 100% privados escríbenos directo — personalizamos cualquier aventura.</div>
-      <a href="https://wa.me/523312345678?text=Hola%2C%20quiero%20cotizar%20un%20tour%20privado%20con%20Vallarta%20Wild" target="_blank" style="display:block;width:100%;background:linear-gradient(135deg,var(--ocean),var(--turquoise));color:var(--bg);border:none;border-radius:50px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:800;padding:14px;text-align:center;text-decoration:none;margin-top:8px;">Cotizar tour privado →</a>
-    </div>
-
-  </div>
-
-  <!-- Info práctica -->
-  <div class="info-section">
-    <div class="sec-eyebrow">Información práctica</div>
-    <div class="sec-title">Antes de tu aventura</div>
-    <div class="info-grid">
-      <div class="ic">
-        <div class="ic-icon">🕗</div>
-        <div class="ic-label">Horarios</div>
-        <div class="ic-value">8:00 am – 6:00 pm<br>Todos los días</div>
-      </div>
-      <div class="ic">
-        <div class="ic-icon">📍</div>
-        <div class="ic-label">Punto de salida</div>
-        <div class="ic-value">Marina Vallarta<br>+ recogida en hotel</div>
-      </div>
-      <div class="ic">
-        <div class="ic-icon">👥</div>
-        <div class="ic-label">Grupos</div>
-        <div class="ic-value">2 a 20 personas<br>Privados disponibles</div>
-      </div>
-      <div class="ic">
-        <div class="ic-icon">🌡️</div>
-        <div class="ic-label">Temporada</div>
-        <div class="ic-value">Todo el año<br>Mejor: Nov–Mayo</div>
-      </div>
-    </div>
-
-    <div style="background:var(--sunset-dim);border:1px solid var(--sunset-border);border-radius:var(--radius-sm);padding:14px 16px;margin-bottom:10px;">
-      <div style="font-size:12px;color:var(--sunset);font-weight:700;margin-bottom:4px;">🏨 ¿Te recogemos en tu hotel?</div>
-      <div style="font-size:12px;color:var(--t2);line-height:1.6;">Ofrecemos transporte de ida y vuelta desde hoteles en la Zona Hotelera, Marina Vallarta y Zona Romántica. Sin costo adicional en tours mayores a $1,200.</div>
     </div>
   </div>
 
-  <!-- FAQ -->
-  <div class="info-section">
-    <div class="sec-eyebrow">Preguntas frecuentes</div>
-    <div class="faq-card">
-
-      <div class="faq-item" onclick="toggleFaq('f1')">
-        <div class="faq-q"><div class="faq-q-text">¿Necesito experiencia previa?</div><div class="faq-arrow">▾</div></div>
-        <div class="faq-a" id="f1"><div class="faq-a-inner">No en la mayoría de nuestros tours. El Jet Ski, cuatrimotos y kayak no requieren experiencia — nuestros guías te dan una instrucción completa antes de empezar. El Velero y el Hiking tienen nivel básico accesible para todos.</div></div>
+  <!-- Buceo & Snorkel -->
+  <div class="tour-card" onclick="toggleTour('t2', this)">
+    <div class="tc-img-wrap">
+      <img src="https://images.unsplash.com/photo-1682687982501-1e58ab814714?w=800&q=80" alt="Buceo Snorkel" loading="lazy">
+      <div class="tc-badge badge-eco">Eco-tour</div>
+      <div class="tc-duration">5 horas</div>
+    </div>
+    <div class="tc-body">
+      <div class="tc-category">Mar · Vida marina</div>
+      <div class="tc-name">Buceo & Snorkel</div>
+      <div class="tc-meta">Los Arcos · Mismaloya · Instructor PADI</div>
+      <div class="tc-footer">
+        <div>
+          <div class="tc-price-label">Desde</div>
+          <div class="tc-price">$1,400 <span>/ persona</span></div>
+        </div>
+        <a href="https://wa.me/523312345678?text=Hola%2C%20quiero%20reservar%20Buceo%20y%20Snorkel" target="_blank" class="tc-book" onclick="event.stopPropagation()">Reservar</a>
       </div>
-
-      <div class="faq-item" onclick="toggleFaq('f2')">
-        <div class="faq-q"><div class="faq-q-text">¿Qué incluye el precio?</div><div class="faq-arrow">▾</div></div>
-        <div class="faq-a" id="f2"><div class="faq-a-inner">Cada tour incluye equipo de seguridad, guía certificado, seguro de actividad y lo especificado en cada descripción. Los tours de día completo incluyen comidas. El transporte desde hotel aplica según el tour — escríbenos para confirmar.</div></div>
+    </div>
+    <div class="tc-detail" id="t2">
+      <div class="tc-detail-inner">
+        <div class="tc-desc">Explora Los Arcos del Pacífico. Pulpos, mantarrayas, tortugas y vida marina en uno de los mejores spots de buceo del Pacífico mexicano. Incluye curso introductorio para principiantes.</div>
+        <div class="tc-includes">
+          <div class="ti">Equipo completo</div>
+          <div class="ti">Instructor PADI</div>
+          <div class="ti">Apto principiantes</div>
+          <div class="ti">Barco privado</div>
+          <div class="ti">Fotos subacuáticas</div>
+          <div class="ti">Snack incluido</div>
+        </div>
+        <a href="https://wa.me/523312345678?text=Hola%2C%20quiero%20reservar%20Buceo%20y%20Snorkel" target="_blank" class="tc-book-full">Reservar ahora</a>
       </div>
-
-      <div class="faq-item" onclick="toggleFaq('f3')">
-        <div class="faq-q"><div class="faq-q-text">¿Hay límite de edad?</div><div class="faq-arrow">▾</div></div>
-        <div class="faq-a" id="f3"><div class="faq-a-inner">Para Jet Ski y cuatrimotos el mínimo es 18 años (o 16 acompañado de adulto). El yate y velero aceptan todas las edades — hay actividades para niños a bordo. El hiking tiene nivel moderado, recomendado para mayores de 10 años.</div></div>
-      </div>
-
-      <div class="faq-item" onclick="toggleFaq('f4')">
-        <div class="faq-q"><div class="faq-q-text">¿Cómo reservo y cuándo pago?</div><div class="faq-arrow">▾</div></div>
-        <div class="faq-a" id="f4"><div class="faq-a-inner">Reserva por WhatsApp o por correo. Pedimos un depósito del 50% para confirmar la fecha — el resto se paga el día del tour. Aceptamos transferencia, tarjeta y efectivo. Cancelaciones con 48 hrs de anticipación sin penalización.</div></div>
-      </div>
-
-      <div class="faq-item" onclick="toggleFaq('f5')">
-        <div class="faq-q"><div class="faq-q-text">¿Ofrecen tours en inglés?</div><div class="faq-arrow">▾</div></div>
-        <div class="faq-a" id="f5"><div class="faq-a-inner">Sí, todos nuestros guías son bilingüe español/inglés. Atendemos a viajeros nacionales e internacionales. También contamos con guías que hablan francés y alemán bajo solicitud previa.</div></div>
-      </div>
-
     </div>
   </div>
 
-  <!-- CTA Final -->
-  <div class="cta-block">
-    <div class="cta-ocean">
-      <div class="cb-emoji">🌊</div>
-      <div class="cb-title">Tu aventura<br><span>empieza hoy</span></div>
-      <div class="cb-sub">Cada día que pasa es un amanecer en el Pacífico que te perdiste. Reserva ahora — los cupos son limitados.</div>
-      <a href="https://wa.me/523312345678?text=Hola%2C%20quiero%20reservar%20una%20aventura%20con%20Vallarta%20Wild" target="_blank" class="cb-btn">Reservar por WhatsApp 🌊</a>
-      <a href="mailto:hola@vallartawild.mx" class="cb-btn outline">hola@vallartawild.mx</a>
-      <div class="cb-note">📍 Marina Vallarta · Puerto Vallarta, Jalisco<br>📱 @VallartaWild · Disponible todos los días</div>
+  <!-- Velero Privado -->
+  <div class="tour-card" onclick="toggleTour('t3', this)">
+    <div class="tc-img-wrap">
+      <img src="https://images.unsplash.com/photo-1500627965408-b5f2c8793f17?w=800&q=80" alt="Velero Privado" loading="lazy">
+      <div class="tc-badge badge-exclusive">Exclusivo</div>
+      <div class="tc-duration">6 horas</div>
+    </div>
+    <div class="tc-body">
+      <div class="tc-category">Mar · Privado</div>
+      <div class="tc-name">Velero a las Islas Marietas</div>
+      <div class="tc-meta">Playa del Amor · Hasta 8 personas · Todo incluido</div>
+      <div class="tc-footer">
+        <div>
+          <div class="tc-price-label">Desde</div>
+          <div class="tc-price">$8,500 <span>/ grupo</span></div>
+        </div>
+        <a href="https://wa.me/523312345678?text=Hola%2C%20quiero%20informes%20del%20Velero%20a%20Islas%20Marietas" target="_blank" class="tc-book" onclick="event.stopPropagation()">Reservar</a>
+      </div>
+    </div>
+    <div class="tc-detail" id="t3">
+      <div class="tc-detail-inner">
+        <div class="tc-desc">Tour privado a las Islas Marietas — reserva natural protegida, hogar de la famosa Playa del Amor. Snorkel entre delfines, tortugas y la icónica cueva escondida.</div>
+        <div class="tc-includes">
+          <div class="ti">Tour 100% privado</div>
+          <div class="ti">Desayuno a bordo</div>
+          <div class="ti">Comida incluida</div>
+          <div class="ti">Equipo de snorkel</div>
+          <div class="ti">Guía certificado</div>
+          <div class="ti">Fotos del tour</div>
+        </div>
+        <a href="https://wa.me/523312345678?text=Hola%2C%20quiero%20informes%20del%20Velero%20a%20Islas%20Marietas" target="_blank" class="tc-book-full">Reservar ahora</a>
+      </div>
     </div>
   </div>
 
+  <!-- Jet Ski -->
+  <div class="tour-card" onclick="toggleTour('t4', this)">
+    <div class="tc-img-wrap">
+      <img src="https://images.unsplash.com/photo-1530053969600-caed2596d242?w=800&q=80" alt="Jet Ski" loading="lazy">
+      <div class="tc-badge badge-adrenaline">Adrenalina</div>
+      <div class="tc-duration">1 hora</div>
+    </div>
+    <div class="tc-body">
+      <div class="tc-category">Mar · Velocidad</div>
+      <div class="tc-name">Jet Ski por la Bahía</div>
+      <div class="tc-meta">Playa Los Muertos · Individual o doble</div>
+      <div class="tc-footer">
+        <div>
+          <div class="tc-price-label">Desde</div>
+          <div class="tc-price">$950 <span>/ moto</span></div>
+        </div>
+        <a href="https://wa.me/523312345678?text=Hola%2C%20quiero%20reservar%20Jet%20Ski" target="_blank" class="tc-book" onclick="event.stopPropagation()">Reservar</a>
+      </div>
+    </div>
+    <div class="tc-detail" id="t4">
+      <div class="tc-detail-inner">
+        <div class="tc-desc">Acelera en las aguas del Pacífico con nuestras motos acuáticas. Sin experiencia necesaria. El tour recorre la bahía hasta Los Arcos del Pacífico.</div>
+        <div class="tc-includes">
+          <div class="ti">Moto acuática nueva</div>
+          <div class="ti">Chaleco salvavidas</div>
+          <div class="ti">Instrucción básica</div>
+          <div class="ti">Seguro incluido</div>
+          <div class="ti">Ruta guiada</div>
+          <div class="ti">Foto de recuerdo</div>
+        </div>
+        <a href="https://wa.me/523312345678?text=Hola%2C%20quiero%20reservar%20Jet%20Ski" target="_blank" class="tc-book-full">Reservar ahora</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cuatrimotos -->
+  <div class="tour-card" onclick="toggleTour('t5', this)">
+    <div class="tc-img-wrap">
+      <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80" alt="Cuatrimotos Sierra" loading="lazy">
+      <div class="tc-badge badge-adrenaline">Sierra Madre</div>
+      <div class="tc-duration">3 horas</div>
+    </div>
+    <div class="tc-body">
+      <div class="tc-category">Tierra · Jungla</div>
+      <div class="tc-name">Cuatrimotos por la Sierra</div>
+      <div class="tc-meta">Sierra Madre Occidental · Cascadas · 2–20 personas</div>
+      <div class="tc-footer">
+        <div>
+          <div class="tc-price-label">Desde</div>
+          <div class="tc-price">$1,200 <span>/ persona</span></div>
+        </div>
+        <a href="https://wa.me/523312345678?text=Hola%2C%20quiero%20reservar%20Cuatrimotos%20Sierra" target="_blank" class="tc-book" onclick="event.stopPropagation()">Reservar</a>
+      </div>
+    </div>
+    <div class="tc-detail" id="t5">
+      <div class="tc-detail-inner">
+        <div class="tc-desc">Caminos de terracería en la Sierra Madre, jungla tropical, cruces de río y cascadas escondidas con vistas panorámicas al Pacífico.</div>
+        <div class="tc-includes">
+          <div class="ti">Cuatrimoto semi-auto</div>
+          <div class="ti">Casco y equipo</div>
+          <div class="ti">Guía bilingüe</div>
+          <div class="ti">Parada en cascada</div>
+          <div class="ti">Transporte incluido</div>
+          <div class="ti">Agua y snack</div>
+        </div>
+        <a href="https://wa.me/523312345678?text=Hola%2C%20quiero%20reservar%20Cuatrimotos%20Sierra" target="_blank" class="tc-book-full">Reservar ahora</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Jungle Hiking -->
+  <div class="tour-card" onclick="toggleTour('t6', this)">
+    <div class="tc-img-wrap">
+      <img src="https://images.unsplash.com/photo-1551632811-561732d1e306?w=800&q=80" alt="Jungle Hiking" loading="lazy">
+      <div class="tc-badge badge-eco">Eco-tour</div>
+      <div class="tc-duration">5 horas</div>
+    </div>
+    <div class="tc-body">
+      <div class="tc-category">Tierra · Naturaleza</div>
+      <div class="tc-name">Jungle Hiking — El Edén</div>
+      <div class="tc-meta">Río Cuale · Máx. 8 personas · Nivel moderado</div>
+      <div class="tc-footer">
+        <div>
+          <div class="tc-price-label">Desde</div>
+          <div class="tc-price">$850 <span>/ persona</span></div>
+        </div>
+        <a href="https://wa.me/523312345678?text=Hola%2C%20quiero%20reservar%20Jungle%20Hiking" target="_blank" class="tc-book" onclick="event.stopPropagation()">Reservar</a>
+      </div>
+    </div>
+    <div class="tc-detail" id="t6">
+      <div class="tc-detail-inner">
+        <div class="tc-desc">Adéntrate hasta El Edén, locación de la película Predator. Cruza el Río Cuale, observa aves exóticas y descansa en cascadas naturales rodeadas de jungla.</div>
+        <div class="tc-includes">
+          <div class="ti">Guía naturalista</div>
+          <div class="ti">Bastones de trekking</div>
+          <div class="ti">Desayuno en el río</div>
+          <div class="ti">Transporte incluido</div>
+          <div class="ti">Identificación flora</div>
+          <div class="ti">Seguro de actividad</div>
+        </div>
+        <a href="https://wa.me/523312345678?text=Hola%2C%20quiero%20reservar%20Jungle%20Hiking" target="_blank" class="tc-book-full">Reservar ahora</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Wild Pack -->
+  <div class="tour-card wide" onclick="toggleTour('t7', this)">
+    <div class="tc-img-wrap">
+      <img src="https://images.unsplash.com/photo-1502680390469-be75c86b636f?w=800&q=80" alt="Wild Pack" loading="lazy">
+      <div class="tc-badge badge-exclusive">⭐ Paquete completo</div>
+      <div class="tc-duration">2 días</div>
+    </div>
+    <div class="tc-body">
+      <div class="tc-category">Mar + Sierra + Jungla</div>
+      <div class="tc-name">Wild Vallarta Pack</div>
+      <div class="tc-meta">Todo incluido · 4 aventuras · Ahorra $800</div>
+      <div class="tc-footer">
+        <div>
+          <div class="tc-price-label">Desde</div>
+          <div class="tc-price">$3,200 <span>/ persona</span></div>
+        </div>
+        <a href="https://wa.me/523312345678?text=Hola%2C%20me%20interesa%20el%20Wild%20Vallarta%20Pack" target="_blank" class="tc-book" onclick="event.stopPropagation()">Reservar</a>
+      </div>
+    </div>
+    <div class="tc-detail" id="t7">
+      <div class="tc-detail-inner">
+        <div class="tc-desc">El paquete definitivo. Día 1: Sunset Yacht + Buceo en Los Arcos. Día 2: Cuatrimotos en la sierra + Jungle Hiking. Todo incluido — transporte, comidas y guías bilingüe.</div>
+        <div class="tc-includes">
+          <div class="ti">4 aventuras completas</div>
+          <div class="ti">Todas las comidas</div>
+          <div class="ti">Transporte completo</div>
+          <div class="ti">Guías bilingüe</div>
+          <div class="ti">Fotos profesionales</div>
+          <div class="ti">Ahorra $800</div>
+        </div>
+        <a href="https://wa.me/523312345678?text=Hola%2C%20me%20interesa%20el%20Wild%20Vallarta%20Pack" target="_blank" class="tc-book-full">Reservar ahora</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- POR QUÉ NOSOTROS -->
+<div class="why-section">
+  <div class="why-eyebrow">Por qué elegirnos</div>
+  <div class="why-title">Más de una década<br>en el Pacífico</div>
+  <div class="why-grid">
+    <div class="why-item">
+      <span class="wi-icon">🧭</span>
+      <div class="wi-title">Guías locales</div>
+      <div class="wi-desc">Todos bilingüe, todos certificados, todos enamorados de Puerto Vallarta.</div>
+    </div>
+    <div class="why-item">
+      <span class="wi-icon">🛟</span>
+      <div class="wi-title">Seguridad total</div>
+      <div class="wi-desc">Equipo certificado, seguros incluidos y protocolos de seguridad en cada tour.</div>
+    </div>
+    <div class="why-item">
+      <span class="wi-icon">🌿</span>
+      <div class="wi-title">Turismo responsable</div>
+      <div class="wi-desc">Respetamos la naturaleza y las comunidades locales en cada experiencia.</div>
+    </div>
+    <div class="why-item">
+      <span class="wi-icon">✦</span>
+      <div class="wi-title">Tours privados</div>
+      <div class="wi-desc">Personalizamos cualquier experiencia para grupos, familias y ocasiones especiales.</div>
+    </div>
+  </div>
+</div>
+
+<!-- INFO PRÁCTICA -->
+<div class="info-section">
+  <div class="eyebrow">Información práctica</div>
+  <div class="info-grid">
+    <div class="info-item">
+      <div class="ii-icon">🕗</div>
+      <div class="ii-label">Horarios</div>
+      <div class="ii-value">8:00 am – 6:00 pm · Todos los días</div>
+    </div>
+    <div class="info-item">
+      <div class="ii-icon">📍</div>
+      <div class="ii-label">Salida</div>
+      <div class="ii-value">Marina Vallarta + recogida en hotel</div>
+    </div>
+    <div class="info-item">
+      <div class="ii-icon">👥</div>
+      <div class="ii-label">Grupos</div>
+      <div class="ii-value">2 a 20 personas · Privados disponibles</div>
+    </div>
+    <div class="info-item">
+      <div class="ii-icon">🌡️</div>
+      <div class="ii-label">Temporada</div>
+      <div class="ii-value">Todo el año · Mejor: Nov–Mayo</div>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ -->
+<div class="faq-section">
+  <div class="eyebrow">Preguntas frecuentes</div>
+
+  <div class="faq-item" onclick="toggleFaq('f1')">
+    <div class="faq-q">
+      <div class="faq-q-text">¿Necesito experiencia previa?</div>
+      <div class="faq-icon">+</div>
+    </div>
+    <div class="faq-a" id="f1"><div class="faq-a-inner">No en la mayoría de nuestros tours. Jet Ski, cuatrimotos y snorkel no requieren experiencia — nuestros guías te instruyen antes de empezar. Para buceo ofrecemos curso introductorio.</div></div>
+  </div>
+
+  <div class="faq-item" onclick="toggleFaq('f2')">
+    <div class="faq-q">
+      <div class="faq-q-text">¿Cómo reservo y cuándo pago?</div>
+      <div class="faq-icon">+</div>
+    </div>
+    <div class="faq-a" id="f2"><div class="faq-a-inner">Reserva por WhatsApp. Pedimos 50% de depósito para confirmar la fecha — el resto el día del tour. Aceptamos transferencia, tarjeta y efectivo. Cancelaciones con 48 hrs sin penalización.</div></div>
+  </div>
+
+  <div class="faq-item" onclick="toggleFaq('f3')">
+    <div class="faq-q">
+      <div class="faq-q-text">¿Tienen tours en inglés?</div>
+      <div class="faq-icon">+</div>
+    </div>
+    <div class="faq-a" id="f3"><div class="faq-a-inner">Sí, todos nuestros guías son bilingüe español/inglés. También contamos con guías en francés bajo solicitud previa.</div></div>
+  </div>
+
+  <div class="faq-item" onclick="toggleFaq('f4')">
+    <div class="faq-q">
+      <div class="faq-q-text">¿Recogen en el hotel?</div>
+      <div class="faq-icon">+</div>
+    </div>
+    <div class="faq-a" id="f4"><div class="faq-a-inner">Sí, ofrecemos transporte desde hoteles en Zona Hotelera, Marina Vallarta y Zona Romántica sin costo adicional en tours mayores a $1,200 por persona.</div></div>
+  </div>
+</div>
+
+<!-- CTA FINAL -->
+<div class="cta-final">
+  <div class="cta-img">
+    <img src="https://images.unsplash.com/photo-1590523741831-ab7e8b8f9c7f?w=1200&q=80" alt="Puerto Vallarta atardecer">
+  </div>
+  <div class="cta-overlay"></div>
+  <div class="cta-content">
+    <div class="cta-eyebrow">Puerto Vallarta te espera</div>
+    <div class="cta-title">¿Listo para tu<br><em>próxima aventura?</em></div>
+    <div class="cta-sub">Cada día que pasa es un amanecer en el Pacífico que te perdiste. Escríbenos hoy.</div>
+    <div class="cta-btns">
+      <a href="https://wa.me/523312345678?text=Hola%2C%20quiero%20reservar%20una%20aventura%20con%20Vallarta%20Wild" target="_blank" class="cta-btn">Reservar por WhatsApp</a>
+      <a href="mailto:hola@vallartawild.mx" class="cta-btn outline">hola@vallartawild.mx</a>
+    </div>
+    <div class="cta-note">📍 Marina Vallarta · Puerto Vallarta, Jalisco<br>@VallartaWild · Disponible todos los días</div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="footer-logo">Vallarta <span>Wild</span></div>
+  <div class="footer-sub">Adventures & Exploration · Puerto Vallarta · México</div>
 </div>
 
 <script>
-  function startApp() {
-    document.getElementById('splash').classList.add('out');
-    setTimeout(function() { document.getElementById('splash').style.display = 'none'; }, 600);
-  }
+  // Header scroll effect
+  window.addEventListener('scroll', function() {
+    var h = document.getElementById('header');
+    if (window.scrollY > 60) h.classList.add('scrolled');
+    else h.classList.remove('scrolled');
+  });
 
-  function showAct(id, btn) {
-    document.querySelectorAll('.act-section').forEach(function(s) { s.classList.remove('active'); });
-    document.querySelectorAll('.act-chip').forEach(function(b) { b.classList.remove('active'); });
-    document.getElementById('act-' + id).classList.add('active');
-    btn.classList.add('active');
-    document.querySelectorAll('.adv-detail').forEach(function(d) { d.classList.remove('open'); });
-  }
-
-  function toggleAdv(id) {
+  // Toggle tour detail
+  var openTour = null;
+  function toggleTour(id, card) {
     var el = document.getElementById(id);
-    var isOpen = el.classList.contains('open');
-    document.querySelectorAll('.adv-detail').forEach(function(d) { d.classList.remove('open'); });
-    if (!isOpen) {
+    var isSame = openTour === id;
+    document.querySelectorAll('.tc-detail').forEach(function(d) { d.classList.remove('open'); });
+    if (!isSame) {
       el.classList.add('open');
-      setTimeout(function() { el.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 200);
-    }
+      openTour = id;
+      setTimeout(function() { el.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 300);
+    } else { openTour = null; }
   }
 
+  // FAQ
   function toggleFaq(id) {
     var el = document.getElementById(id);
     var parent = el.closest('.faq-item');
